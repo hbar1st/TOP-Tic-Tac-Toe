@@ -7,9 +7,15 @@
 body {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 2rem;
+    font-size: 2rem;
 
+    p {
+        opacity: 0;
+    }
 }
 
 #board {
@@ -33,7 +39,7 @@ body {
     >div.middle {
         transform: skewY(1deg);
     }
-    
+
     >div {
         display: grid;
         grid-template-rows: min-content;
@@ -42,8 +48,8 @@ body {
         img {
             grid-row: 1;
             grid-column: 1;
-            opacity: 1;
-            padding: 5px;
+            opacity: 0;
+            padding: 8px;
         }
 
         img:last-child {
