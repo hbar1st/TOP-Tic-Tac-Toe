@@ -9,45 +9,53 @@
 </head>
 
 <body>
-    <p id="game-over">Game Over! <span id="winners-name">Hanaa</span> wins!</p>
-    <div id="board">
-        <div class="left top" data-loc="0">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="middle top" data-loc="1">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="right top" data-loc="2">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="middle left" data-loc="3">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="middle" data-loc="4">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="middle right" data-loc="5">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="bottom left" data-loc="6">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="bottom middle" data-loc="7">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
-        <div class="bottom right" data-loc="8">
-            <img src="tic-O.svg" alt="O">
-            <img src="tac-X.svg" alt="X">
-        </div>
+    <div>
+        <label for="player0"><img src="tac-X.svg" alt="X mark"></label><input type="text" name="player0" id="player0"
+            value="Player 1">
+        <label for="player1"><img src="tic-O.svg" alt="O mark"></label><input type="text" name="player1" id="player1"
+            value="Player 2">
     </div>
+
+    <p id="game-over">Game Over! <span id="winners-name">Hanaa</span> wins!</p>
+    <fieldset id="board">
+        <legend><img id="reset" src="restart_orange_24px.svg" alt="restart game"></legend>
+        <div class="cell left top" data-loc="0">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell middle top" data-loc="1">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell right top" data-loc="2">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell middle left" data-loc="3">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell middle" data-loc="4">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell middle right" data-loc="5">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell bottom left" data-loc="6">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell bottom middle" data-loc="7">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+        <div class="cell bottom right" data-loc="8">
+            <img src="tic-O.svg" alt="O">
+            <img src="tac-X.svg" alt="X">
+        </div>
+    </fieldset>
     <script src="script.js"></script>
 </body>
 

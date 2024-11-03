@@ -1,7 +1,8 @@
 const gameBoard = (function GameBoard() {
     // board is 9 cells. Cell 0,1,2 are the top 3.
     // cell 3, 4, 5 are the middle and cells 6, 7, 8 are the bottom
-    const board = [null, null, null, null, null, null, null, null, null];
+    const board = new Array(9);
+    board.fill(null);
 
     const play = (player, cellNum, imgEl) => {
         if (!board[cellNum]) {
@@ -10,6 +11,16 @@ const gameBoard = (function GameBoard() {
             board[cellNum] = player.mark;
             console.log(board);
         }
+    }
+
+    const reset = (imgList) => {
+        board.fill(null);
+        console.log(board);
+
+        //clear the DOM too
+        imgList.forEach(imgEl => {
+            imgEl.style.opacity = "0";
+        });
     }
     // to win a player must fill 3 cells in a row
     // (012), (345), (678), 
@@ -35,7 +46,7 @@ const gameBoard = (function GameBoard() {
         }
         return false;
     }
-    return { board, play, hasWinningRow };
+    return { board, play, hasWinningRow, reset };
 })();
 
 function Player(name, mark) {
@@ -47,13 +58,27 @@ const controller = (function Controller() {
     const players = [new Player("XPlayer 0", "X"), new Player("OPlayer 1", "O")];
     let currentPlayer = 0; // zero is player 0, while 1 is player 
     let turns = 0;
+    let disableClicks = false;
 
-    console.table(gameBoard);
+    /**
+     * 
+     * @param {*} flag true if the game should be called for a winner
+     * @param {*} name the name of the winner (optional param)
+     */
+    function gameOver(flag, name) {
+        const gameOverMsg = document.querySelector("#game-over");
+        if (flag) {
+            const winnersNameEl = document.querySelector("#winners-name");
+            winnersNameEl.innerText = name;
+            gameOverMsg.style.opacity = "1";
+        } else {
+            gameOverMsg.style.opacity = "0";
+        }
+    }
 
     const boardEl = document.querySelector("#board");
     boardEl.addEventListener("click", (e) => {
         e.preventDefault();
-        turns++;
 
         //if cell is clicked and is empty, then
         //make either O or X show up
@@ -66,21 +91,33 @@ const controller = (function Controller() {
         if (players[currentPlayer].mark == "X") {
             imgEl = xMark;
         }
-        const cellNum = parseInt(e.target.parentElement.getAttribute("data-loc"));
-        gameBoard.play(players[currentPlayer], cellNum, imgEl);
-
-        if (turns >= 5) {
-            //check if someone won yet
-            if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
-                const winnersNameEl = document.querySelector("#winners-name");
-                winnersNameEl.innerText = players[currentPlayer].name;
-                const gameOverMsg = document.querySelector("#game-over");
-                gameOverMsg.style.opacity = "1";
+        const parentEl = e.target.parentElement;
+        if (e.target.getAttribute("id") === "reset") {
+            turns = 0;
+            currentPlayer = 0;
+            disableClicks = false;
+            gameOver(false);
+            gameBoard.reset(document.querySelectorAll(".cell img"));
+        } else {
+            if (disableClicks) {
+                return;
             }
-        }
-        //toggle player
-        currentPlayer = currentPlayer ? 0 : 1;
+            const cellNum = parseInt(parentEl.getAttribute("data-loc"));
 
+            turns++;
+            gameBoard.play(players[currentPlayer], cellNum, imgEl);
+
+            if (turns >= 5) {
+                //check if someone won yet
+                if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
+                    gameOver(true, players[currentPlayer].name);
+                    disableClicks = true;
+                }
+            }
+            //toggle player
+            currentPlayer = currentPlayer ? 0 : 1;
+
+        }
     });
 
 
