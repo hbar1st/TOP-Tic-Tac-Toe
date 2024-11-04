@@ -55,7 +55,22 @@ function Player(name, mark) {
 
 const controller = (function Controller() {
 
+    const player0 = document.querySelector("#player0");
+    const player1 = document.querySelector("#player1");
+
     const players = [new Player("XPlayer 0", "X"), new Player("OPlayer 1", "O")];
+
+    function setPlayerName(e) {
+        const targetID = e.target.getAttribute("id");
+        if (targetID == "player0") {
+            players[0].name = e.target.value;
+        } else {
+            players[1].name = e.target.value;
+        }
+    }
+    player0.addEventListener("change", setPlayerName);
+    player1.addEventListener("change", setPlayerName);
+
     let currentPlayer = 0; // zero is player 0, while 1 is player 
     let turns = 0;
     let disableClicks = false;
@@ -75,7 +90,6 @@ const controller = (function Controller() {
             gameOverMsg.style.opacity = "0";
         }
     }
-
     const boardEl = document.querySelector("#board");
     boardEl.addEventListener("click", (e) => {
         e.preventDefault();
