@@ -49,8 +49,8 @@ const gameBoard = (function GameBoard() {
     return { board, play, hasWinningRow, reset };
 })();
 
-function Player(name, mark) {
-    return { name, mark };
+function Player(name, mark, element) {
+    return { name, mark, element };
 }
 
 const controller = (function Controller() {
@@ -58,7 +58,7 @@ const controller = (function Controller() {
     const player0 = document.querySelector("#player0");
     const player1 = document.querySelector("#player1");
 
-    const players = [new Player("XPlayer 0", "X"), new Player("OPlayer 1", "O")];
+    const players = [new Player("Player 1", "X", player0), new Player("Player 2", "O", player1)];
 
     function setPlayerName(e) {
         const targetID = e.target.getAttribute("id");
@@ -90,6 +90,17 @@ const controller = (function Controller() {
             gameOverMsg.style.opacity = "0";
         }
     }
+
+    function togglePlayer(currentPlayer) {
+        if (currentPlayer === 0) {
+            players[0].element.classList.add("current-player");
+            players[1].element.classList.remove("current-player");
+        } else {
+            players[1].element.classList.add("current-player");
+            players[0].element.classList.remove("current-player");
+        }
+    }
+
     const boardEl = document.querySelector("#board");
     boardEl.addEventListener("click", (e) => {
         e.preventDefault();
@@ -102,9 +113,6 @@ const controller = (function Controller() {
         const xMark = e.target.parentElement.lastElementChild;
         const oMark = e.target.parentElement.firstElementChild;
         let imgEl = oMark;
-        if (players[currentPlayer].mark == "X") {
-            imgEl = xMark;
-        }
         const parentEl = e.target.parentElement;
         if (e.target.getAttribute("id") === "reset") {
             turns = 0;
@@ -112,25 +120,30 @@ const controller = (function Controller() {
             disableClicks = false;
             gameOver(false);
             gameBoard.reset(document.querySelectorAll(".cell img"));
+            togglePlayer(currentPlayer);
         } else {
             if (disableClicks) {
                 return;
             }
             const cellNum = parseInt(parentEl.getAttribute("data-loc"));
-
-            turns++;
-            gameBoard.play(players[currentPlayer], cellNum, imgEl);
-
-            if (turns >= 5) {
-                //check if someone won yet
-                if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
-                    gameOver(true, players[currentPlayer].name);
-                    disableClicks = true;
+            if (cellNum >= 0) {
+                if (players[currentPlayer].mark == "X") {
+                    imgEl = xMark;
                 }
-            }
-            //toggle player
-            currentPlayer = currentPlayer ? 0 : 1;
+                turns++;
+                gameBoard.play(players[currentPlayer], cellNum, imgEl);
 
+                if (turns >= 5) {
+                    //check if someone won yet
+                    if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
+                        gameOver(true, players[currentPlayer].name);
+                        disableClicks = true;
+                    }
+                }
+                //toggle player
+                currentPlayer = currentPlayer ? 0 : 1;
+                togglePlayer(currentPlayer);
+            }
         }
     });
 
