@@ -4,12 +4,21 @@ const gameBoard = (function GameBoard() {
     const board = new Array(9);
     board.fill(null);
 
+    /**
+     * 
+     * @param {*} player 
+     * @param {*} cellNum 
+     * @param {*} imgEl 
+     * @returns false if the cell is not free to play on
+     */
     const play = (player, cellNum, imgEl) => {
         if (!board[cellNum]) {
             //if this cell is free to play on then:
             imgEl.style.opacity = "1";
             board[cellNum] = player.mark;
-            console.log(board);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -47,6 +56,7 @@ const gameBoard = (function GameBoard() {
         return false;
     }
 
+    // a tie is when the board is full (we assume that hasWinningRow was checked earlier)
     const hasTieGame = () => {
         return board.filter(el => el === null).length === 0;
     }
@@ -100,6 +110,10 @@ const controller = (function Controller() {
         }
     }
 
+    /**
+     * if player 0 is the current player, then make the input background change color to reflect that
+     * @param {*} currentPlayer index
+     */
     function togglePlayer(currentPlayer) {
         if (currentPlayer === 0) {
             players[0].element.classList.add("current-player");
@@ -123,6 +137,7 @@ const controller = (function Controller() {
         const oMark = e.target.parentElement.firstElementChild;
         let imgEl = oMark;
         const parentEl = e.target.parentElement;
+
         if (e.target.getAttribute("id") === "reset") {
             turns = 0;
             currentPlayer = 0;
@@ -139,22 +154,23 @@ const controller = (function Controller() {
                 if (players[currentPlayer].mark == "X") {
                     imgEl = xMark;
                 }
-                turns++;
-                gameBoard.play(players[currentPlayer], cellNum, imgEl);
+                if (gameBoard.play(players[currentPlayer], cellNum, imgEl)) {
+                    turns++;
 
-                if (turns >= 5) {
-                    //check if someone won yet
-                    if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
-                        gameOver(1, players[currentPlayer].name);
-                        disableClicks = true;
-                    } else if (gameBoard.hasTieGame(players[currentPlayer].mark)) {
-                        gameOver(2, players[currentPlayer].name);
-                        disableClicks = true;
+                    if (turns >= 5) {
+                        //check if someone won yet
+                        if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
+                            gameOver(1, players[currentPlayer].name);
+                            disableClicks = true;
+                        } else if (gameBoard.hasTieGame(players[currentPlayer].mark)) {
+                            gameOver(2, players[currentPlayer].name);
+                            disableClicks = true;
+                        }
                     }
+                    //toggle player
+                    currentPlayer = currentPlayer ? 0 : 1;
+                    togglePlayer(currentPlayer);
                 }
-                //toggle player
-                currentPlayer = currentPlayer ? 0 : 1;
-                togglePlayer(currentPlayer);
             }
         }
     });
