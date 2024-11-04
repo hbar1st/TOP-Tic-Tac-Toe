@@ -24,7 +24,6 @@ const gameBoard = (function GameBoard() {
 
     const reset = (imgList) => {
         board.fill(null);
-        console.log(board);
 
         //clear the DOM too
         imgList.forEach(imgEl => {
@@ -46,7 +45,6 @@ const gameBoard = (function GameBoard() {
                 return acc;
             }
         }, "");
-        console.log({ pattern }); //eg. 0248 matches 048 win
         for (let i = 0; i < winningPatterns.length; i++) {
             console.log(winningPatterns[i]);
             if (pattern.match(new RegExp(winningPatterns[i]))) {
@@ -69,6 +67,9 @@ function Player(name, mark, element) {
 
 const controller = (function Controller() {
 
+    const boardEl = document.querySelector("#board");
+    const legendEl = document.querySelector("legend");
+    const resetImg = document.querySelector("#reset");
     const player0 = document.querySelector("#player0");
     const player1 = document.querySelector("#player1");
 
@@ -97,6 +98,9 @@ const controller = (function Controller() {
     function gameOver(flag, name) {
         const gameOverMsg = document.querySelector("#game-over");
         const tieGameMsg = document.querySelector("#tie-game");
+        if (flag > 0) {
+            document.querySelectorAll(".cell").forEach(el => el.style.opacity = "0.4");
+        }
         if (flag === 1) {
             const winnersNameEl = document.querySelector("#winners-name");
             winnersNameEl.innerText = name;
@@ -109,6 +113,7 @@ const controller = (function Controller() {
             tieGameMsg.style.opacity = "0";
             gameOverMsg.classList.remove("blink-me");
             tieGameMsg.classList.remove("blink-me");
+            document.querySelectorAll(".cell").forEach(el => el.style.opacity = "1");
         }
     }
 
@@ -126,7 +131,6 @@ const controller = (function Controller() {
         }
     }
 
-    const boardEl = document.querySelector("#board");
     boardEl.addEventListener("click", (e) => {
         e.preventDefault();
 

@@ -117,16 +117,20 @@ img {
 }
 
 .blink-me {
-    animation: blink 1s infinite linear; 
+    animation: blink 1s infinite linear;
+    background: linear-gradient(45deg, transparent 0%, #d284f74d, #87a7c587, transparent 100%);
+    border-radius: 25px;
 }
 
 @keyframes blink {
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
