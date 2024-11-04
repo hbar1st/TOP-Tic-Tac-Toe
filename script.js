@@ -46,7 +46,11 @@ const gameBoard = (function GameBoard() {
         }
         return false;
     }
-    return { board, play, hasWinningRow, reset };
+
+    const hasTieGame = () => {
+        return board.filter(el => el === null).length === 0;
+    }
+    return { board, play, hasWinningRow, reset, hasTieGame };
 })();
 
 function Player(name, mark, element) {
@@ -77,17 +81,22 @@ const controller = (function Controller() {
 
     /**
      * 
-     * @param {*} flag true if the game should be called for a winner
+     * @param {*} flag 1 if the game should be called for a winner, 2 if it's a tie, 0 if restarting
      * @param {*} name the name of the winner (optional param)
      */
     function gameOver(flag, name) {
         const gameOverMsg = document.querySelector("#game-over");
-        if (flag) {
+        const tieGameMsg = document.querySelector("#tie-game");
+        if (flag === 1) {
             const winnersNameEl = document.querySelector("#winners-name");
             winnersNameEl.innerText = name;
             gameOverMsg.style.opacity = "1";
-        } else {
+        } else if (flag === 2) {
+            tieGameMsg.style.opacity = "1";
+        }
+        else {
             gameOverMsg.style.opacity = "0";
+            tieGameMsg.style.opacity = "0";
         }
     }
 
@@ -136,7 +145,10 @@ const controller = (function Controller() {
                 if (turns >= 5) {
                     //check if someone won yet
                     if (gameBoard.hasWinningRow(players[currentPlayer].mark)) {
-                        gameOver(true, players[currentPlayer].name);
+                        gameOver(1, players[currentPlayer].name);
+                        disableClicks = true;
+                    } else if (gameBoard.hasTieGame(players[currentPlayer].mark)) {
+                        gameOver(2, players[currentPlayer].name);
                         disableClicks = true;
                     }
                 }
