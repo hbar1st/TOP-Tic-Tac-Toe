@@ -100,13 +100,15 @@ const controller = (function Controller() {
         if (flag === 1) {
             const winnersNameEl = document.querySelector("#winners-name");
             winnersNameEl.innerText = name;
-            gameOverMsg.style.opacity = "1";
+            gameOverMsg.classList.add("blink-me");
         } else if (flag === 2) {
-            tieGameMsg.style.opacity = "1";
+            tieGameMsg.classList.add("blink-me");
         }
         else {
             gameOverMsg.style.opacity = "0";
             tieGameMsg.style.opacity = "0";
+            gameOverMsg.classList.remove("blink-me");
+            tieGameMsg.classList.remove("blink-me");
         }
     }
 

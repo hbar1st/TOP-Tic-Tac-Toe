@@ -115,3 +115,19 @@ body {
 img {
     -webkit-user-drag: none;
 }
+
+.blink-me {
+    animation: blink 1s infinite linear; 
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
