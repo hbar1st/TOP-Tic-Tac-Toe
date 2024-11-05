@@ -31,24 +31,11 @@ body {
         }
     }
 
-    #results {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: auto;
-
-        p {
-            grid-column: 1;
-            grid-row: 1;
-            opacity: 0;
-            text-align: center;
-            font-weight: 900;
-        }
-    }
 }
 
 #board {
     display: grid;
-    grid-template-columns: repeat(3, min-content);
+    grid-template-rows: repeat(3, min-content);
     grid-template-columns: repeat(3, min-content);
     gap: 0px;
     padding: 1rem 1rem calc(1rem + 25px) 1rem;
@@ -73,6 +60,26 @@ body {
         }
     }
 
+    #results {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-self: stretch;
+        align-self: stretch;
+
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+
+        p {
+            grid-column: 1;
+            grid-row: 1;
+            opacity: 0;
+            text-align: center;
+            font-weight: 900;
+            align-self: center;
+        }
+    }
+
     >div:not(.right) {
         border-right: 10px solid black;
         transform: skewY(-1deg);
@@ -85,6 +92,30 @@ body {
 
     >div.middle {
         transform: skewY(1deg);
+
+        &.right {
+            grid-column: 3;
+        }
+
+        &.left {
+            grid-column: 1;
+        }
+
+        &.center {
+            grid-column: 2;
+        }
+    }
+
+    >div.cell.top {
+        grid-row: 1;
+    }
+
+    >div.cell.bottom {
+        grid-row: 3;
+    }
+
+    >div.cell:not(.top):not(.bottom) {
+        grid-row: 2;
     }
 
     >div {
@@ -116,22 +147,14 @@ img {
     -webkit-user-drag: none;
 }
 
-.blink-me {
-    animation: blink 1s infinite linear;
-    background: linear-gradient(45deg, transparent 0%, #d284f74d, #87a7c587, transparent 100%);
-    border-radius: 25px;
-}
+.end-game {
 
-@keyframes blink {
-    0% {
-        opacity: 1;
+    background: black;
+
+    &:not(img) {
+        opacity: 1 !important;
+        border-radius: 25px;
+        color: white;
     }
 
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }

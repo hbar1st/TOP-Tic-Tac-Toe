@@ -15,12 +15,12 @@
         <label for="player1"><img src="tic-O.svg" alt="O mark"></label><input type="text" name="player1" id="player1"
             value="Player 2">
     </div>
-    <div id="results">
-        <p id="game-over">Game Over! <span id="winners-name">Hanaa</span> wins!</p>
-        <p id="tie-game">Aww! It's a tie!</p>
-    </div>
     <fieldset id="board">
         <legend><img id="reset" src="restart_orange_24px.svg" alt="restart game"></legend>
+        <section id="results">
+            <p id="game-over">Game Over!<br> <span id="winners-name">Hanaa</span> wins!</p>
+            <p id="tie-game">Aww! It's a tie!</p>
+        </section>
         <div class="cell left top" data-loc="0">
             <img src="tic-O.svg" alt="O">
             <img src="tac-X.svg" alt="X">
@@ -37,7 +37,7 @@
             <img src="tic-O.svg" alt="O">
             <img src="tac-X.svg" alt="X">
         </div>
-        <div class="cell middle" data-loc="4">
+        <div class="cell middle center" data-loc="4">
             <img src="tic-O.svg" alt="O">
             <img src="tac-X.svg" alt="X">
         </div>

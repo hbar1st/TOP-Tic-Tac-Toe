@@ -98,21 +98,29 @@ const controller = (function Controller() {
     function gameOver(flag, name) {
         const gameOverMsg = document.querySelector("#game-over");
         const tieGameMsg = document.querySelector("#tie-game");
+
         if (flag > 0) {
-            document.querySelectorAll(".cell").forEach(el => el.style.opacity = "0.4");
+            document.querySelectorAll(".cell").forEach(el => el.style.opacity = "0.3");
+            player0.disabled = true;
+            player1.disabled = true;
         }
         if (flag === 1) {
             const winnersNameEl = document.querySelector("#winners-name");
             winnersNameEl.innerText = name;
-            gameOverMsg.classList.add("blink-me");
+            gameOverMsg.classList.add("end-game");
+            resetImg.classList.add("end-game");
         } else if (flag === 2) {
-            tieGameMsg.classList.add("blink-me");
+            tieGameMsg.classList.add("end-game");
+            resetImg.classList.add("end-game");
         }
         else {
+            player0.disabled = false;
+            player1.disabled = false;
             gameOverMsg.style.opacity = "0";
             tieGameMsg.style.opacity = "0";
-            gameOverMsg.classList.remove("blink-me");
-            tieGameMsg.classList.remove("blink-me");
+            gameOverMsg.classList.remove("end-game");
+            tieGameMsg.classList.remove("end-game");
+            resetImg.classList.remove("end-game");
             document.querySelectorAll(".cell").forEach(el => el.style.opacity = "1");
         }
     }
@@ -121,7 +129,9 @@ const controller = (function Controller() {
      * if player 0 is the current player, then make the input background change color to reflect that
      * @param {*} currentPlayer index
      */
-    function togglePlayer(currentPlayer) {
+    function togglePlayer() {
+        //toggle player
+        currentPlayer = currentPlayer ? 0 : 1;
         if (currentPlayer === 0) {
             players[0].element.classList.add("current-player");
             players[1].element.classList.remove("current-player");
@@ -171,11 +181,13 @@ const controller = (function Controller() {
                         } else if (gameBoard.hasTieGame(players[currentPlayer].mark)) {
                             gameOver(2, players[currentPlayer].name);
                             disableClicks = true;
+                        } else {
+                            togglePlayer();
+
                         }
+                    } else {
+                        togglePlayer();
                     }
-                    //toggle player
-                    currentPlayer = currentPlayer ? 0 : 1;
-                    togglePlayer(currentPlayer);
                 }
             }
         }
