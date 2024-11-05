@@ -144,7 +144,7 @@ body {
 }
 
 img {
-    -webkit-user-drag: none;
+    -webkit-user-drag: none; //stops people from being able to drag my images on chrome
 }
 
 .end-game {
