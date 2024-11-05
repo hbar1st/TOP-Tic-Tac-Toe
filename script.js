@@ -46,7 +46,6 @@ const gameBoard = (function GameBoard() {
             }
         }, "");
         for (let i = 0; i < winningPatterns.length; i++) {
-            console.log(winningPatterns[i]);
             if (pattern.match(new RegExp(winningPatterns[i]))) {
                 return true;
             }
