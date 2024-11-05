@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+
 }
 
 body {
@@ -40,6 +41,10 @@ body {
             letter-spacing: 1px;
             margin: 0 auto;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+            &::selection {
+                background: orange;
+            }
         }
     }
 
@@ -58,6 +63,10 @@ body {
     border-right: none;
     border-bottom: none;
     border-top-width: 10px;
+
+    &::selection {
+        background: transparent;
+    }
 
     legend {
         font-size: 2rem;
@@ -168,7 +177,7 @@ img {
     background: black;
     z-index: 3;
     transform: scale(1.5);
-    
+
     &:not(img) {
         opacity: 1 !important;
         border-radius: 25px;
