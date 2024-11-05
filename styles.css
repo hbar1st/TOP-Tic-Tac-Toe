@@ -150,6 +150,7 @@ img {
 .end-game {
 
     background: black;
+    z-index: 3;
 
     &:not(img) {
         opacity: 1 !important;
