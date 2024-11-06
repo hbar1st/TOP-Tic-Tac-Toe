@@ -1,8 +1,17 @@
+@font-face {
+    font-family: 'caveatregular';
+    src: url('caveat-font/caveat-variablefont_wght-webfont.woff2') format('woff2'),
+        url('caveat-font/caveat-variablefont_wght-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-
+    font-family: 'caveatregular';
 }
 
 body {
@@ -17,6 +26,7 @@ body {
     margin-top: 2rem;
     background: repeating-linear-gradient(180deg, gray 0%, rgb(221, 210, 210) .3%, white .3%, white 5%);
     border-left: 35px dotted black;
+
     margin-left: 10px;
     transform: rotate(-2deg);
 
@@ -34,18 +44,25 @@ body {
 
         input {
             text-align: center;
-            font-size: 1.5rem;
+
+            caret-color: orange;
+
+            font-size: 2rem;
             padding: .2rem 1rem;
-            border-radius: 25px;
+            /* border-radius: 25px;*/
             font-weight: 700;
             letter-spacing: 1px;
             margin: 0 auto;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
             &::selection {
                 background: orange;
             }
+
+            border-width: 5px;
+            border-image: url(tac-X.svg) 30 round;
+
         }
+
     }
 
 }
@@ -57,12 +74,13 @@ body {
     gap: 0px;
     padding: 1rem 1rem calc(1rem + 25px) 1rem;
     border-style: double;
-    border-radius: 1px;
     border-color: rgba(158, 106, 10, 0.46);
     border-left: none;
     border-right: none;
     border-bottom: none;
-    border-top-width: 10px;
+    border-top-width: 1.5rem;
+    border-start-end-radius: 12px;
+    border-start-start-radius: 10px;
 
     &::selection {
         background: transparent;
@@ -70,7 +88,7 @@ body {
 
     legend {
         font-size: 2rem;
-        border: none;
+        margin-left: auto;
 
         img {
             width: 50px;
@@ -163,9 +181,11 @@ body {
 }
 
 .current-player {
-    /** background: linear-gradient(-100deg, #dfa2fc 0%, #e7bafc 30%, #2184dc 100%); **/
-    background: black;
-    color: white;
+    background: repeating-linear-gradient(0deg, transparent 0%, #ebe2ef 10%,
+            #e7dfeb 30%, transparent 50%, transparent 60%, #bbcfe1 90%, transparent 100%);
+    /*background-color: black;*/
+    background-clip: content-box;
+    color: black;
 }
 
 img {
@@ -185,4 +205,23 @@ img {
         border: 3px dashed orange;
     }
 
+}
+
+.blink {
+    animation: blink 1s 5;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.8;
+        color: orange;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
